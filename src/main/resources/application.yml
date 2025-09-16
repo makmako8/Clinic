@@ -1,0 +1,37 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:clinic;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  jackson:
+    mapper:
+      accept-case-insensitive-enums: true  # ← ここを mapper の下に正しくインデント
+
+logging:
+  level:
+    org.springframework.web: WARN
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.springframework.security: DEBUG
+    org.springframework.security.oauth2: DEBUG
+
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: on_param   # ← ハイフン/アンダースコアはこれでOK（引用符不要）
+
+app:
+  jwt:
+   secret: "dev-secret-THIS-IS-AT-LEAST-32-CHARS-LONG-0123456789abcd"
+   issuer: "clinic-mvp"
+   ttl-seconds: 3600
